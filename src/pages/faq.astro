@@ -1,0 +1,24 @@
+---
+import Base from '../layouts/Base.astro';
+const faqs = [
+  { q: "Where should I start?", a: "Start with Beginner Foundations or a single private session." },
+  { q: "What should I wear?", a: "Form-fitting gym clothes, grippy socks required." },
+  { q: "Cancellation policy?", a: "Cancel up to 12 hours before class for a full refund." },
+  { q: "Pregnant?", a: "We have a dedicated prenatal class with Priya, safe for every trimester." },
+  { q: "Parking?", a: "Limited street parking. Borough station is 5 minutes walk." },
+  { q: "Gift cards?", a: "Yes — email hello@studio-pilates.com." },
+];
+const faqSchema = { "@context": "https://schema.org", "@type": "FAQPage", "mainEntity": faqs.map(f => ({ "@type": "Question", "name": f.q, "acceptedAnswer": { "@type": "Answer", "text": f.a } })) };
+const breadcrumbs = { "@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [ { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://studio-pilates.vercel.app" }, { "@type": "ListItem", "position": 2, "name": "FAQ", "item": "https://studio-pilates.vercel.app/faq" } ] };
+---
+<Base title="Pilates Studio FAQ | Studio Pilates" description="Pilates studio questions answered. Cancellation, what to bring, parking, beginners." structuredData={[faqSchema, breadcrumbs]}>
+  <section class="container-x pt-16 pb-10">
+    <p class="eyebrow mb-4">Good questions</p>
+    <h1 class="font-[Fraunces] text-5xl md:text-6xl leading-tight max-w-3xl mb-6">Frequently Asked Questions</h1>
+  </section>
+  <section class="container-x pb-20">
+    <div class="divide-y divide-cream-300/60 border-y border-cream-300/60 max-w-3xl">
+      {faqs.map(f => (<details class="group py-6"><summary class="flex justify-between items-center cursor-pointer list-none"><span class="font-[Fraunces] text-xl pr-6">{f.q}</span><span class="text-terracotta-600 text-xl group-open:rotate-45 transition">+</span></summary><p class="mt-4 text-ink-700 leading-relaxed">{f.a}</p></details>))}
+    </div>
+  </section>
+</Base>
