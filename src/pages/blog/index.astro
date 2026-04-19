@@ -1,0 +1,30 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getSupabase, type ContentRow } from '../../lib/supabase';
+const supabase = getSupabase();
+const { data } = await supabase.from('content').select('*').not('published_at', 'is', null).order('published_at', { ascending: false });
+const posts = (data ?? []) as ContentRow[];
+---
+<Base title="Journal | Studio Pilates" description="Notes, stories and guides from the Studio Pilates teaching team.">
+  <section class="container-x pt-16 pb-10">
+    <p class="eyebrow mb-4">The journal</p>
+    <h1 class="font-[Fraunces] text-5xl md:text-6xl leading-tight max-w-3xl mb-6">Notes From the Studio Floor</h1>
+  </section>
+  <section class="container-x pb-20">
+    {posts.length === 0 ? (
+      <div class="bg-cream-200/60 rounded-2xl p-10 max-w-2xl">
+        <h2 class="font-[Fraunces] text-3xl mb-3">Fresh articles soon</h2>
+        <p class="text-ink-700 leading-relaxed mb-6">Our first articles are in the kiln.</p>
+      </div>
+    ) : (
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {posts.map(p => (
+          <a href={`/blog/${p.slug}`} class="group block bg-cream-50 border border-cream-300/60 rounded-2xl overflow-hidden hover:shadow-xl transition">
+            {p.cover_image_url && <div class="aspect-[4/3] overflow-hidden"><img src={p.cover_image_url} alt={p.title} class="w-full h-full object-cover" /></div>}
+            <div class="p-6"><h2 class="font-[Fraunces] text-2xl mb-3">{p.title}</h2>{p.excerpt && <p class="text-sm text-ink-500 line-clamp-3">{p.excerpt}</p>}</div>
+          </a>
+        ))}
+      </div>
+    )}
+  </section>
+</Base>

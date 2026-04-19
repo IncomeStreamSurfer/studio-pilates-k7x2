@@ -1,0 +1,25 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getSupabase, type ContentRow } from '../../lib/supabase';
+const { slug } = Astro.params;
+const supabase = getSupabase();
+const { data } = await supabase.from('content').select('*').eq('slug', slug).not('published_at', 'is', null).maybeSingle();
+if (!data) return Astro.redirect('/blog');
+const post = data as ContentRow;
+function renderBody(md: string): string {
+  const blocks = md.split(/\n\n+/);
+  return blocks.map(b => {
+    const t = b.trim();
+    if (t.startsWith('## ')) return `<h2 class="font-[Fraunces] text-3xl mt-12 mb-4">${t.slice(3)}</h2>`;
+    return `<p class="mb-5 leading-relaxed text-ink-700">${t.replace(/\n/g, '<br/>')}</p>`;
+  }).join('');
+}
+const articleSchema = { "@context": "https://schema.org", "@type": "BlogPosting", "headline": post.title, "datePublished": post.published_at, "author": { "@type": "Organization", "name": "Studio Pilates" } };
+---
+<Base title={`${post.title} | Studio Pilates`} description={post.seo_description ?? post.excerpt ?? ''} ogType="article" structuredData={articleSchema}>
+  <article class="container-x pt-16 pb-20 max-w-3xl">
+    <h1 class="font-[Fraunces] text-5xl md:text-6xl leading-tight mb-8">{post.title}</h1>
+    {post.cover_image_url && <div class="aspect-[16/9] rounded-[2rem] overflow-hidden mb-10"><img src={post.cover_image_url} alt={post.title} class="w-full h-full object-cover" /></div>}
+    <div class="text-lg" set:html={renderBody(post.body)} />
+  </article>
+</Base>

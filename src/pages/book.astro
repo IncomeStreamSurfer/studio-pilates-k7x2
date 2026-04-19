@@ -1,0 +1,52 @@
+---
+import Base from '../layouts/Base.astro';
+import { getSupabase, type ClassSession } from '../lib/supabase';
+import { formatGBP } from '../lib/stripe';
+const supabase = getSupabase();
+const url = new URL(Astro.request.url);
+const preselected = url.searchParams.get('session');
+const { data: sessionsData } = await supabase.from('class_sessions').select('*, class:classes(*), instructor:instructors(*)').gte('starts_at', new Date().toISOString()).order('starts_at').limit(40);
+const sessions = (sessionsData ?? []) as ClassSession[];
+const breadcrumbs = { "@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [ { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://studio-pilates.vercel.app" }, { "@type": "ListItem", "position": 2, "name": "Book", "item": "https://studio-pilates.vercel.app/book" } ] };
+function fmtDate(iso: string) { return new Date(iso).toLocaleString('en-GB', { weekday: 'short', day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' }); }
+---
+<Base title="Book a Pilates Class Online | Studio Pilates" description="Book your pilates class in minutes. Secure payment powered by Stripe." structuredData={breadcrumbs}>
+  <section class="container-x pt-16 pb-10">
+    <nav class="text-sm text-ink-500 mb-6"><a href="/" class="hover:text-terracotta-600">Home</a> <span class="mx-2">/</span> <span>Book</span></nav>
+    <p class="eyebrow mb-4">Reserve your spot · secure checkout</p>
+    <h1 class="font-[Fraunces] text-5xl md:text-6xl leading-tight max-w-3xl mb-6">Book Your Pilates Class — Secure Online Booking</h1>
+  </section>
+  <section class="container-x pb-20">
+    <form id="book-form" class="grid lg:grid-cols-5 gap-8">
+      <div class="lg:col-span-3 bg-cream-50 border border-cream-300/60 rounded-2xl p-6 md:p-8">
+        <h2 class="font-[Fraunces] text-2xl mb-4">Choose your session</h2>
+        <div class="max-h-[420px] overflow-y-auto pr-2 space-y-2">
+          {sessions.length === 0 && <p class="text-ink-500 text-sm">No upcoming sessions — please check back soon.</p>}
+          {sessions.map(s => (
+            <label class={`flex items-center justify-between gap-3 p-4 rounded-xl border cursor-pointer transition ${preselected === s.id ? 'border-terracotta-500 bg-terracotta-500/5' : 'border-cream-300 hover:border-ink-900/40'}`}>
+              <div class="flex items-center gap-3"><input type="radio" name="session_id" value={s.id} data-price={s.class?.price_pence ?? 0} data-name={s.class?.name ?? ''} data-starts={s.starts_at} required checked={preselected === s.id} class="w-4 h-4 accent-terracotta-500" /><div><div class="font-medium text-ink-900 text-sm">{s.class?.name}</div><div class="text-xs text-ink-500">{fmtDate(s.starts_at)} · with {s.instructor?.name}</div></div></div>
+              <span class="text-sm font-medium text-terracotta-600">{s.class ? formatGBP(s.class.price_pence) : ''}</span>
+            </label>
+          ))}
+        </div>
+        <h2 class="font-[Fraunces] text-2xl mt-8 mb-4">Your details</h2>
+        <div class="grid sm:grid-cols-2 gap-4">
+          <label class="block"><span class="text-sm font-medium text-ink-700 block mb-1.5">Full name</span><input name="name" required type="text" class="w-full rounded-xl border border-cream-300 bg-cream-100 px-4 py-3 text-sm" placeholder="Jane Smith" /></label>
+          <label class="block"><span class="text-sm font-medium text-ink-700 block mb-1.5">Email</span><input name="email" required type="email" class="w-full rounded-xl border border-cream-300 bg-cream-100 px-4 py-3 text-sm" placeholder="you@example.com" /></label>
+        </div>
+      </div>
+      <aside class="lg:col-span-2">
+        <div class="bg-ink-900 text-cream-100 rounded-2xl p-6 md:p-8">
+          <h2 class="font-[Fraunces] text-2xl mb-4">Booking summary</h2>
+          <div id="summary" class="space-y-3 text-sm"><p class="text-cream-300">Select a session to see your summary.</p></div>
+          <div class="border-t border-cream-100/10 mt-5 pt-5 text-sm">
+            <div class="flex justify-between font-medium mb-4"><span>Total</span><span id="summary-total">—</span></div>
+            <button type="submit" id="checkout-btn" class="w-full bg-terracotta-500 hover:bg-terracotta-600 text-cream-100 py-3.5 rounded-full text-sm font-medium transition">Pay & book →</button>
+            <p class="text-[11px] text-cream-300 mt-4">Secure checkout via Stripe.</p>
+          </div>
+        </div>
+      </aside>
+    </form>
+  </section>
+  <script is:inline>(function(){const f=document.getElementById('book-form');const sm=document.getElementById('summary');const t=document.getElementById('summary-total');const btn=document.getElementById('checkout-btn');function upd(){const s=f.querySelector('input[name=session_id]:checked');if(!s)return;const p=parseInt(s.getAttribute('data-price'),10);const n=s.getAttribute('data-name');const st=new Date(s.getAttribute('data-starts'));sm.innerHTML='<div>Class: '+n+'</div><div>When: '+st.toLocaleString('en-GB')+'</div>';t.textContent='£'+(p/100).toFixed(2);}f.addEventListener('change',upd);upd();f.addEventListener('submit',async e=>{e.preventDefault();btn.disabled=true;btn.textContent='Redirecting...';const fd=new FormData(f);const r=await fetch('/api/checkout',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({session_id:fd.get('session_id'),name:fd.get('name'),email:fd.get('email')})});const d=await r.json();if(d.url){window.location=d.url;}else{btn.disabled=false;btn.textContent='Pay & book →';alert(d.error||'Error');}});})();</script>
+</Base>
