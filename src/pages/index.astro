@@ -1,0 +1,172 @@
+---
+import Base from '../layouts/Base.astro';
+
+const orgSchema = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "Studio Pilates",
+  "url": "https://studio-pilates.vercel.app",
+  "logo": "https://studio-pilates.vercel.app/og-default.png",
+  "sameAs": [
+    "https://instagram.com/studiopilates",
+    "https://facebook.com/studiopilates"
+  ]
+};
+const webSiteSchema = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "Studio Pilates",
+  "url": "https://studio-pilates.vercel.app",
+  "description": "Boutique pilates studio with reformer, mat, tower and specialty classes."
+};
+
+const classHighlights = [
+  { slug: 'reformer', title: 'Reformer', tagline: 'Strength, control, grace.', time: '50 min · All levels', img: 'https://images.unsplash.com/photo-1599447421416-3414500d18a5?auto=format&fit=crop&w=900&q=80' },
+  { slug: 'mat', title: 'Mat', tagline: 'Classical core, deeply felt.', time: '50 min · All levels', img: 'https://images.unsplash.com/photo-1518611012118-696072aa579a?auto=format&fit=crop&w=900&q=80' },
+  { slug: 'tower', title: 'Tower', tagline: 'Spring resistance, sculpted.', time: '50 min · Intermediate', img: 'https://images.unsplash.com/photo-1540206395-68808572332f?auto=format&fit=crop&w=900&q=80' },
+  { slug: 'prenatal', title: 'Prenatal', tagline: 'Safe, strong, supported.', time: '50 min · All trimesters', img: 'https://images.unsplash.com/photo-1555252333-9f8e92e65df9?auto=format&fit=crop&w=900&q=80' },
+];
+
+const instructorPreviews = [
+  { slug: 'sarah-james', name: 'Sarah James', speciality: 'Senior Reformer', img: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=600&q=80' },
+  { slug: 'michael-chen', name: 'Michael Chen', speciality: 'Mat & Tower', img: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=600&q=80' },
+  { slug: 'priya-nair', name: 'Priya Nair', speciality: 'Prenatal & Postnatal', img: 'https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?auto=format&fit=crop&w=600&q=80' },
+  { slug: 'emma-walsh', name: 'Emma Walsh', speciality: 'Foundations', img: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=600&q=80' },
+];
+---
+
+<Base
+  title="Studio Pilates | Boutique Pilates Classes & Booking"
+  description="Discover boutique pilates classes for every level. Book reformer, mat, and specialty sessions online. Your transformation starts here."
+  structuredData={[orgSchema, webSiteSchema]}
+>
+  <section class="relative overflow-hidden">
+    <div class="container-x pt-16 md:pt-24 pb-16 md:pb-28 grid lg:grid-cols-12 gap-12 items-center">
+      <div class="lg:col-span-7">
+        <p class="eyebrow mb-6">A boutique pilates studio · London</p>
+        <h1 class="font-[Fraunces] text-[clamp(2.6rem,6vw,5rem)] leading-[1.02] tracking-tight mb-8">
+          Move with <em class="text-terracotta-600 not-italic" style="font-style: italic;">intention.</em><br/>
+          Transform with purpose.
+        </h1>
+        <p class="text-ink-700 text-lg md:text-xl max-w-xl leading-relaxed mb-10">
+          Reformer, mat, tower and specialty classes in a quiet, light-filled studio.
+          Small groups. Expert instructors. Easy online booking — all the breath and
+          precision, none of the fuss.
+        </p>
+        <div class="flex flex-wrap items-center gap-4">
+          <a href="/book" class="btn-primary">Book a Class →</a>
+          <a href="/schedule" class="btn-secondary">View Timetable</a>
+        </div>
+        <div class="mt-12 flex items-center gap-8 text-sm text-ink-500">
+          <div><span class="block text-2xl font-[Fraunces] text-ink-900">1,400+</span>clients moving weekly</div>
+          <div class="hidden sm:block h-10 w-px bg-cream-300"></div>
+          <div><span class="block text-2xl font-[Fraunces] text-ink-900">12</span>certified instructors</div>
+          <div class="hidden md:block h-10 w-px bg-cream-300"></div>
+          <div class="hidden md:block"><span class="block text-2xl font-[Fraunces] text-ink-900">4.9 ★</span>on Google reviews</div>
+        </div>
+      </div>
+      <div class="lg:col-span-5 relative">
+        <div class="relative aspect-[4/5] rounded-[2rem] overflow-hidden shadow-2xl">
+          <img src="https://images.unsplash.com/photo-1518611012118-696072aa579a?auto=format&fit=crop&w=1200&q=80" alt="A pilates student in a light-filled studio reaching gently overhead" class="absolute inset-0 w-full h-full object-cover" />
+          <div class="absolute inset-0 bg-gradient-to-t from-ink-900/30 to-transparent"></div>
+        </div>
+        <div class="absolute -bottom-6 -left-6 bg-cream-100 rounded-2xl p-5 shadow-xl border border-cream-300/60 max-w-[240px]">
+          <div class="text-xs uppercase tracking-[0.18em] text-terracotta-600 mb-1.5 font-semibold">Next class</div>
+          <div class="font-[Fraunces] text-xl leading-tight mb-1">Reformer Flow</div>
+          <div class="text-sm text-ink-500">Today · 6:30 pm · with Sarah</div>
+          <a href="/book" class="mt-3 inline-block text-sm text-terracotta-600 hover:text-terracotta-700 font-medium">Book spot →</a>
+        </div>
+        <div class="hidden md:block absolute -top-4 -right-4 bg-sage-500 text-cream-100 rounded-full w-24 h-24 grid place-items-center text-center text-xs leading-tight rotate-12">
+          <span>Small<br/>groups<br/>max 8</span>
+        </div>
+      </div>
+    </div>
+    <div aria-hidden class="absolute top-1/3 -left-20 w-80 h-80 rounded-full bg-terracotta-500/5 blur-3xl"></div>
+    <div aria-hidden class="absolute bottom-0 right-0 w-96 h-96 rounded-full bg-sage-500/10 blur-3xl"></div>
+  </section>
+
+  <section id="classes" class="container-x py-20 md:py-28">
+    <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-14">
+      <div>
+        <p class="eyebrow mb-4">Find your practice</p>
+        <h2 class="font-[Fraunces] text-4xl md:text-5xl leading-tight max-w-2xl">Classes designed for every body, every level.</h2>
+      </div>
+      <a href="/classes" class="text-sm font-medium text-terracotta-600 hover:text-terracotta-700 inline-flex items-center gap-2">See all classes →</a>
+    </div>
+    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      {classHighlights.map(c => (
+        <a href={`/classes/${c.slug}`} class="group block rounded-2xl overflow-hidden bg-cream-50 border border-cream-300/60 hover:shadow-xl hover:-translate-y-1 transition">
+          <div class="aspect-[4/5] overflow-hidden">
+            <img src={c.img} alt={`${c.title} pilates class at Studio Pilates`} class="w-full h-full object-cover group-hover:scale-105 transition duration-700" />
+          </div>
+          <div class="p-5">
+            <h3 class="font-[Fraunces] text-2xl mb-1">{c.title}</h3>
+            <p class="text-ink-500 text-sm mb-3">{c.tagline}</p>
+            <p class="text-xs text-ink-400 uppercase tracking-wider">{c.time}</p>
+          </div>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <section class="bg-cream-200/60 py-20 md:py-28">
+    <div class="container-x grid lg:grid-cols-2 gap-16 items-center">
+      <div class="relative">
+        <div class="aspect-[4/3] rounded-[2rem] overflow-hidden">
+          <img src="https://images.unsplash.com/photo-1540206395-68808572332f?auto=format&fit=crop&w=1200&q=80" alt="A reformer machine in a sunlit studio with high ceilings" class="w-full h-full object-cover" />
+        </div>
+        <div class="absolute -bottom-8 -right-8 bg-cream-100 rounded-2xl p-6 shadow-xl border border-cream-300/60 max-w-[280px] hidden md:block">
+          <p class="text-sm text-ink-500 italic">"The most grounded I've felt in years. The instructors actually see you."</p>
+          <p class="text-xs text-ink-400 mt-3">— Hannah, member since 2023</p>
+        </div>
+      </div>
+      <div>
+        <p class="eyebrow mb-4">Our studio</p>
+        <h2 class="font-[Fraunces] text-4xl md:text-5xl leading-tight mb-6">Pilates, without the performance.</h2>
+        <p class="text-ink-700 text-lg leading-relaxed mb-8">We believe pilates works best when the room is quiet, the class is small, and the instructor has time to notice you. Every session is capped at eight people. Every teacher is certified, kind, and properly seen.</p>
+        <ul class="space-y-5">
+          <li class="flex gap-4"><span class="flex-none w-10 h-10 rounded-full bg-terracotta-500/15 text-terracotta-600 grid place-items-center">01</span><div><h3 class="font-[Fraunces] text-xl mb-1">Max 8 per class</h3><p class="text-ink-500 text-sm leading-relaxed">Real hands-on attention. Your teacher knows your name, your goals, and the knee you've been nursing.</p></div></li>
+          <li class="flex gap-4"><span class="flex-none w-10 h-10 rounded-full bg-terracotta-500/15 text-terracotta-600 grid place-items-center">02</span><div><h3 class="font-[Fraunces] text-xl mb-1">Balanced Body reformers</h3><p class="text-ink-500 text-sm leading-relaxed">Professional-grade equipment, cleaned between every session.</p></div></li>
+          <li class="flex gap-4"><span class="flex-none w-10 h-10 rounded-full bg-terracotta-500/15 text-terracotta-600 grid place-items-center">03</span><div><h3 class="font-[Fraunces] text-xl mb-1">Book in 30 seconds</h3><p class="text-ink-500 text-sm leading-relaxed">Real-time schedule, instant confirmation, Stripe-secured payment. Cancel up to 12 hours in advance, no fee.</p></div></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="container-x py-20 md:py-28">
+    <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-14">
+      <div>
+        <p class="eyebrow mb-4">Our team</p>
+        <h2 class="font-[Fraunces] text-4xl md:text-5xl leading-tight max-w-2xl">Instructors who actually teach you.</h2>
+      </div>
+      <a href="/instructors" class="text-sm font-medium text-terracotta-600 hover:text-terracotta-700">Meet the full team →</a>
+    </div>
+    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      {instructorPreviews.map(i => (
+        <a href={`/instructors/${i.slug}`} class="group block">
+          <div class="aspect-[4/5] rounded-2xl overflow-hidden mb-4 bg-cream-200">
+            <img src={i.img} alt={`Pilates instructor ${i.name}`} class="w-full h-full object-cover group-hover:scale-105 transition duration-700" />
+          </div>
+          <h3 class="font-[Fraunces] text-xl">{i.name}</h3>
+          <p class="text-sm text-ink-500">{i.speciality}</p>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <section class="container-x py-16">
+    <div class="rounded-[2rem] bg-ink-900 text-cream-100 overflow-hidden relative">
+      <div class="grid lg:grid-cols-2 gap-10 p-10 md:p-16 items-center">
+        <div>
+          <p class="eyebrow mb-4" style="color: #E6DCC8;">Ready to move?</p>
+          <h2 class="font-[Fraunces] text-4xl md:text-5xl leading-tight mb-6">Your first class is waiting.</h2>
+          <p class="text-cream-300 text-lg leading-relaxed mb-8 max-w-lg">Browse the full weekly timetable, pick your moment, and book in under a minute. Beginners always welcome — start with Foundations.</p>
+          <div class="flex flex-wrap gap-4">
+            <a href="/book" class="inline-flex items-center gap-2 bg-terracotta-500 hover:bg-terracotta-600 text-cream-100 px-6 py-3 rounded-full font-medium transition">Book a class</a>
+            <a href="/schedule" class="inline-flex items-center gap-2 border border-cream-300/40 hover:bg-cream-100/5 text-cream-100 px-6 py-3 rounded-full font-medium transition">View schedule</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</Base>
