@@ -1,0 +1,49 @@
+---
+const year = new Date().getFullYear();
+---
+<footer class="mt-32 bg-ink-900 text-cream-100">
+  <div class="container-x py-16 grid md:grid-cols-4 gap-12">
+    <div class="md:col-span-1">
+      <div class="flex items-center gap-2.5 mb-5">
+        <span class="inline-flex items-center justify-center w-9 h-9 rounded-full bg-cream-100 text-ink-900 font-[Fraunces] text-lg leading-none">sp</span>
+        <span class="font-[Fraunces] text-xl">Studio Pilates</span>
+      </div>
+      <p class="text-cream-300 text-sm leading-relaxed">Move with intention. Transform with purpose.</p>
+    </div>
+    <div>
+      <h4 class="text-xs uppercase tracking-[0.18em] text-cream-300 mb-5 font-sans">Practice</h4>
+      <ul class="space-y-3 text-sm">
+        <li><a href="/classes" class="hover:text-terracotta-500">Classes</a></li>
+        <li><a href="/schedule" class="hover:text-terracotta-500">Schedule</a></li>
+        <li><a href="/pricing" class="hover:text-terracotta-500">Pricing</a></li>
+        <li><a href="/book" class="hover:text-terracotta-500">Book a class</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4 class="text-xs uppercase tracking-[0.18em] text-cream-300 mb-5 font-sans">Studio</h4>
+      <ul class="space-y-3 text-sm">
+        <li><a href="/about" class="hover:text-terracotta-500">About</a></li>
+        <li><a href="/instructors" class="hover:text-terracotta-500">Instructors</a></li>
+        <li><a href="/testimonials" class="hover:text-terracotta-500">Testimonials</a></li>
+        <li><a href="/faq" class="hover:text-terracotta-500">FAQ</a></li>
+        <li><a href="/contact" class="hover:text-terracotta-500">Contact</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4 class="text-xs uppercase tracking-[0.18em] text-cream-300 mb-5 font-sans">Visit Us</h4>
+      <address class="not-italic text-sm text-cream-300 space-y-1 leading-relaxed">
+        <div>42 Arbour Lane</div>
+        <div>London, SE1 3QX</div>
+        <div>United Kingdom</div>
+        <div class="pt-2"><a href="tel:+442079460418" class="hover:text-terracotta-500">+44 20 7946 0418</a></div>
+        <div><a href="mailto:hello@studio-pilates.com" class="hover:text-terracotta-500">hello@studio-pilates.com</a></div>
+      </address>
+    </div>
+  </div>
+  <div class="border-t border-cream-100/10">
+    <div class="container-x py-6 flex flex-col sm:flex-row items-center justify-between text-xs text-cream-300 gap-2">
+      <span>© {year} Studio Pilates. All rights reserved.</span>
+      <span>Crafted for mindful movement.</span>
+    </div>
+  </div>
+</footer>

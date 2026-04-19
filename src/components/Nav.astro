@@ -1,0 +1,27 @@
+---
+const pathname = Astro.url.pathname;
+const links = [
+  { href: '/classes', label: 'Classes' },
+  { href: '/schedule', label: 'Schedule' },
+  { href: '/instructors', label: 'Instructors' },
+  { href: '/pricing', label: 'Pricing' },
+  { href: '/about', label: 'About' },
+];
+---
+<header class="sticky top-0 z-40 backdrop-blur-md bg-cream-100/80 border-b border-cream-300/60">
+  <div class="container-x flex items-center justify-between py-5">
+    <a href="/" class="flex items-center gap-2.5 group">
+      <span class="inline-flex items-center justify-center w-9 h-9 rounded-full bg-ink-900 text-cream-100 font-[Fraunces] text-lg leading-none group-hover:bg-terracotta-600 transition">sp</span>
+      <span class="font-[Fraunces] text-xl tracking-tight">Studio Pilates</span>
+    </a>
+    <nav class="hidden md:flex items-center gap-7 text-sm">
+      {links.map(l => (
+        <a href={l.href} class={`hover:text-terracotta-600 transition ${pathname.startsWith(l.href) ? 'text-terracotta-600' : 'text-ink-700'}`}>{l.label}</a>
+      ))}
+    </nav>
+    <div class="flex items-center gap-3">
+      <a href="/schedule" class="hidden sm:inline text-sm text-ink-700 hover:text-terracotta-600">Timetable</a>
+      <a href="/book" class="btn-primary text-sm">Book a Class</a>
+    </div>
+  </div>
+</header>
